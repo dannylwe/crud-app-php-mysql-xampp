@@ -6,20 +6,32 @@ in the urlbar -->
         if(empty($_POST['email'])){
             echo "<br />all fields must be filled <br />";
         } else {
-            echo htmlspecialchars($_POST['email']);
+            // check email
+            $email = htmlspecialchars($_POST['email']);
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                echo 'must be a valid email address';
+            }
         }
 
+        // check title
         if(empty($_POST['title'])){
             echo "<br />all fields must be filled <br />";
         } else {
-            echo htmlspecialchars($_POST['title']);
+            $title = htmlspecialchars($_POST['title']);
+            if(!preg_match('/^[a-zA-Z\s]+$/', $title)){
+                echo 'Title must be letters and spaces only';
+            }
         }
 
-        if(empty($_POST['ingredients'])){
-            echo "all fields must be filled <br />";
-        } else {
-            echo htmlspecialchars($_POST['ingredients']);
-        }
+        // check ingredients
+		if(empty($_POST['ingredients'])){
+			echo 'At least one ingredient is required <br />';
+		} else {
+			$ingredients = $_POST['ingredients'];
+			if(!preg_match('/^([a-zA-Z\s]+)(,\s*[a-zA-Z\s]*)*$/', $ingredients)){
+				echo 'Ingredients must be a comma separated list';
+			}
+		}
     }
 ?>
 
