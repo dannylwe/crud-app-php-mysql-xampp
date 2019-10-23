@@ -1,10 +1,10 @@
 <!-- when using a get method, the params and values are stored 
 in the urlbar -->
 <?php 
+    // initializing variables
     $title = $email = $ingredients = "";
     $errors = array('email'=> '', 'title'=> '', 'ingredients'=> '');
     
-
     if(isset($_POST['submit'])){
         // use built in htmlspecialchars to prevent xcss
         if(empty($_POST['email'])){
@@ -17,7 +17,7 @@ in the urlbar -->
             }
         }
 
-        // check title
+        // check title using regex
         if(empty($_POST['title'])){
             $errors['title'] = "title fields must be filled <br />";
         } else {
@@ -27,7 +27,7 @@ in the urlbar -->
             }
         }
 
-        // check ingredients
+        // check ingredients using regex
 		if(empty($_POST['ingredients'])){
 			$errors['ingredients'] = 'At least one ingredient is required <br />';
 		} else {
@@ -35,7 +35,13 @@ in the urlbar -->
 			if(!preg_match('/^([a-zA-Z\s]+)(,\s*[a-zA-Z\s]*)*$/', $ingredients)){
 				$errors['ingredients'] = 'Ingredients must be a comma separated list';
 			}
-		}
+        } // end of check
+        
+        // check if arrary has valid value. If empty returns false.
+        if(!array_filter($errors)){
+            // redirect user to index
+            header('Location: index.php');
+        }
     }
 ?>
 
