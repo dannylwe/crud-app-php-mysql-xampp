@@ -3,7 +3,23 @@ in the urlbar -->
 <?php 
     if(isset($_POST['submit'])){
         // use built in htmlspecialchars to prevent xcss
-        echo htmlspecialchars($_POST['email']);
+        if(empty($_POST['email'])){
+            echo "<br />all fields must be filled <br />";
+        } else {
+            echo htmlspecialchars($_POST['email']);
+        }
+
+        if(empty($_POST['title'])){
+            echo "<br />all fields must be filled <br />";
+        } else {
+            echo htmlspecialchars($_POST['title']);
+        }
+
+        if(empty($_POST['ingredients'])){
+            echo "all fields must be filled <br />";
+        } else {
+            echo htmlspecialchars($_POST['ingredients']);
+        }
     }
 ?>
 
