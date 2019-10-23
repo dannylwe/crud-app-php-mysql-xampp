@@ -2,7 +2,8 @@
 in the urlbar -->
 <?php 
     if(isset($_POST['submit'])){
-        echo $_POST['email'];
+        // use built in htmlspecialchars to prevent xcss
+        echo htmlspecialchars($_POST['email']);
     }
 ?>
 
