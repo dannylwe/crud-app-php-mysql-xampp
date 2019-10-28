@@ -15,7 +15,10 @@ $result = mysqli_query($conn, $sql);
 // fetch resulting records
 $pizzas = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-print_r($pizzas);
+// free memory and close connection
+mysqli_free_result($result);
+mysqli_close($conn);
+// print_r($pizzas);
 ?>
 
 
