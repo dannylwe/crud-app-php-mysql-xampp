@@ -1,6 +1,8 @@
 <!-- when using a get method, the params and values are stored 
 in the urlbar -->
 <?php 
+
+    include('./config/db_connect.php');
     // initializing variables
     $title = $email = $ingredients = "";
     $errors = array('email'=> '', 'title'=> '', 'ingredients'=> '');
@@ -39,8 +41,24 @@ in the urlbar -->
         
         // check if arrary has valid value. If empty returns false.
         if(!array_filter($errors)){
-            // redirect user to index
-            header('Location: index.php');
+
+            //mysqli real escape prevents sql injection of malicious code to db
+            $email = mysqli_real_escape_string($conn, $_POST['email']);
+            $title = mysqli_real_escape_string($conn, $_POST['title']);
+            $ingredients = mysqli_real_escape_string($conn, $_POST['ingredients']);
+
+            //create sql
+            $sql = "INSERT INTO pizzas(title, email, ingridents) VALUES('$title', '$email', '$ingredients')";
+
+            //save to db and check
+            if(mysqli_query($conn, $sql)){
+                //success 
+                // redirect user to index
+                header('Location: index.php');
+            } else {
+                echo 'query error: ' . mysqli_error($conn);
+            }
+            
         }
     }
 ?>
